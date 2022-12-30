@@ -4,15 +4,15 @@
 * * @дата 20.11.2022
 * * @brief Заголовочный файл для модуля modAlphaCipher
 */
-# прагма один раз
-# включить  < вектор >
-# включить  < строка >
-# включить  < карту >
-# включить  < локаль >
-# включить  < codecvt >
-# включить  < iostream >
-# включить  < cctype >
-используя  пространство имен  std ;
+#pragma once
+#include <vector>
+#include <string>
+#include <map>
+#include <locale>
+#include <codecvt>
+#include <iostream>
+#include <cctype>
+using namespace std;
 
 /* * @класс modAlphaCipher
 ** @author Кулаков И.С.
@@ -23,30 +23,27 @@
 ** @warnings Реализация только для английского языка!
  */
 
-класс  modAlphaCipher
+class modAlphaCipher
 {
-частный:
-    внутренний ключ;
-    /* * @brief Метод класса, проверяющий текс на валидность
-     ** @param [in] s Текст на русском языке
-     ** @вернуть результат
-     */
-    std::string getValidOpenText ( const std::string & s);
+private:
+    int key;
+   
+    std::string getValidOpenText(const std::string & s);
     /* * @brief Метод класса, проверяющий расшифрованный текст на достоверность
      ** @param [in] s Зашифрованный текст на русском языке
      ** @вернуть результат
      */
-    std::string getValidCipherText ( const std::string & s);
-публичный:
-    modAlphaCipher () = удалить ;
-    modAlphaCipher ( константная строка и ключ1 );
+     std::string getValidCipherText(const std::string & s);
+public:
+    modAlphaCipher()=delete;
+    modAlphaCipher(const string& key1);
     /* * @brief Зашифрование
      ** @param [in] text Открытый текст на русском языке
      ** @warnings Текс не должен быть пустым, строки не должны быть перезаписаны. В тексте были зарегистрированы знаки перпинания и цифры.
      ** Результат @return Зашифрованный текст
      ** @throw cipher_error Если вместо текста ввеена пустая строка
      */
-    std::string encrypt ( const std::string& open_text);
+    std::string encrypt(const std::string& open_text);
     /* * @brief Расшифрование
      ** @param [in] text Зашифрованный текст на русском языке
      ** @warnings Текс не должен быть пустым, строки не должны быть перезаписаны. В тексте были зарегистрированы знаки перпинания и цифры.
@@ -59,16 +56,16 @@
      ** @файл modAlphaCipher.h
      ** @brief Класс исключений
      */
-класс  cipher_error : общедоступный  стандарт ::invalid_argument
+class cipher_error: public std::invalid_argument
 {
-публичный:
+public:
     /* * @brief Проверка текста
      ** @param [in] what_arg После проверки текста при помощи getValidText, если возвращается вызов параметра исключения, причина исключения возникает в качестве параметра параметра.
      ** @warnings Текс не должен быть пустым, строки не должны быть перезаписаны. В тексте были зарегистрированы знаки перпинания и цифры.
      ** @return result Расшифрованный текст
      ** @throw cipher_error Если вместо текста ввеена пустая строка
      */
-    явный  cipher_error ( const std::string& what_arg):
+     explicit cipher_error (const std::string& what_arg):
         std::invalid_argument(what_arg) {}
     /* * @brief Проверка текста
      ** @param [in] what_arg После проверки номера операции, если возвращенный запрос вызова проблемы, причина исключения исключается в качестве параметра функции.
@@ -76,6 +73,6 @@
      ** @return result Расшифрованный текст
      ** @throw cipher_error Если вместо текста ввеена пустая строка
      */
-    явный  cipher_error ( const  char * what_arg):
+    explicit cipher_error (const char* what_arg):
         std::invalid_argument(what_arg) {}
 };
